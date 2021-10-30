@@ -1,25 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import createTheme from '@material-ui/core/styles/createTheme';
+import ThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+
+import NavBar from './components/NavBar';
+import Home from './pages/home'
+import Login from './pages/login'
+import Signup from './pages/signup'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#9a67ea',
+      main: '#673ab7',
+      dark: '#320b86',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#ffff56',
+      main: '#ffea00',
+      dark: '#c7b800',
+      contrastText: '#000000',
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Router>
+          <NavBar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 
