@@ -6,8 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import createTheme from '@material-ui/core/styles/createTheme';
-import ThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-
+import { ThemeProvider } from '@material-ui/core/styles';
 import NavBar from './components/NavBar';
 import Home from './pages/home'
 import Login from './pages/login'
@@ -28,6 +27,9 @@ const theme = createTheme({
       contrastText: '#000000',
     },
   },
+  typography: {
+    useNextVariants: true
+  }
 });
 
 function App() {

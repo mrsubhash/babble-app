@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import Post from '../components/Post.js';
 
 export class Home extends Component {
     constructor() {
@@ -13,7 +14,6 @@ export class Home extends Component {
     componentDidMount() {
         axios.get("/screams")
             .then(res => {
-                console.log(res.data)
                 this.setState({ posts: res.data })
             })
             .catch(err => console.log(err))
@@ -21,7 +21,7 @@ export class Home extends Component {
 
     render() {
         const postsMarkup = this.state.posts ? (
-            this.state.posts.map(post => <p>{post.body}</p>)
+            this.state.posts.map(post => <Post key={post.screamId} post={post} />)
         ) : (<p>Loading...</p>);
 
         return (
