@@ -14,6 +14,8 @@ import Signup from './pages/signup'
 import themeFile from './util/theme'
 import jwtDecode from 'jwt-decode'
 import AuthRoute from "./util/AuthRoute"
+import { Provider } from 'react-redux';
+import store from "./redux/reducers/store"
 
 const theme = createTheme(themeFile);
 
@@ -31,21 +33,23 @@ if (token) {
 
 }
 
-function App() {
+function App () {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Router>
-          <NavBar />
-          <div className="container">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <AuthRoute exact path="/login" component={Login} authenticated={authenticated} />
-              <AuthRoute exact path="/signup" component={Signup} authenticated={authenticated} />
-            </Switch>
-          </div>
-        </Router>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <Router>
+            <NavBar />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <AuthRoute exact path="/login" component={Login} authenticated={authenticated} />
+                <AuthRoute exact path="/signup" component={Signup} authenticated={authenticated} />
+              </Switch>
+            </div>
+          </Router>
+        </div>
+      </Provider>
     </ThemeProvider>
   );
 }
