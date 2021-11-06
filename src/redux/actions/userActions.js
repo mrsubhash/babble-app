@@ -1,4 +1,4 @@
-import { SET_ERRORS, SET_USER, LOADING_UI, CLEAR_ERRORS, SET_UNAUTHENTICATED } from "../reducers/types";
+import { SET_ERRORS, SET_USER, LOADING_UI, CLEAR_ERRORS, SET_UNAUTHENTICATED, LOADING_USER } from "../reducers/types";
 import axios from "axios";
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -42,6 +42,8 @@ export const logoutUser = () => (dispatch) => {
 }
 
 export const getUserData = () => (dispatch) => {
+    dispatch({ type: LOADING_USER })
+
     axios.get('/user')
         .then(res => {
             dispatch({

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post.js';
+import Profile from '../components/Profile.js';
 
 export class Home extends Component {
     constructor() {
@@ -11,7 +12,7 @@ export class Home extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount () {
         axios.get("/screams")
             .then(res => {
                 this.setState({ posts: res.data })
@@ -19,7 +20,7 @@ export class Home extends Component {
             .catch(err => console.log(err))
     }
 
-    render() {
+    render () {
         const postsMarkup = this.state.posts ? (
             this.state.posts.map(post => <Post key={post.screamId} post={post} />)
         ) : (<p>Loading...</p>);
@@ -30,7 +31,7 @@ export class Home extends Component {
                     {postsMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
-                    <p>Profile</p>
+                    <Profile />
                 </Grid>
             </Grid>
         )

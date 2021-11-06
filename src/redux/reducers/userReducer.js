@@ -1,10 +1,11 @@
-import { SET_ERRORS, SET_USER, LOADING_UI, CLEAR_ERRORS, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from "../reducers/types";
+import { SET_ERRORS, SET_USER, LOADING_UI, CLEAR_ERRORS, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER } from "../reducers/types";
 
 const initialState = {
     authenticated: false,
     credentials: {},
     likes: [],
-    notifications: []
+    notifications: [],
+    loading: false
 }
 
 export default function userReducer (state = initialState, action) {
@@ -21,6 +22,11 @@ export default function userReducer (state = initialState, action) {
             return {
                 authenticated: true,
                 ...action.payload
+            }
+        case LOADING_USER:
+            return {
+                ...state,
+                loading: true
             }
         default:
             return state
