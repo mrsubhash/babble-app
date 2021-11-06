@@ -1,14 +1,11 @@
-import { SET_ERRORS, SET_USER, LOADING_UI, CLEAR_ERRORS } from "../reducers/types";
+import { SET_ERRORS, SET_USER, LOADING_UI, CLEAR_ERRORS, SET_UNAUTHENTICATED } from "../reducers/types";
 import axios from "axios";
 
 export const loginUser = (userData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI })
     axios.post('/login', userData)
         .then(res => {
-
-            const babbleToken = `Bearer ${res.data.token}`;
-            localStorage.setItem("babbleToken", babbleToken)
-            axios.defaults.headers.common['Authorization'] = babbleToken
+            setAuthorizationHeader(res.data.token)
             dispatch(getUserData())
             dispatch({ type: CLEAR_ERRORS })
             history.push('/')
@@ -21,6 +18,29 @@ export const loginUser = (userData, history) => (dispatch) => {
         })
 }
 
+export const signupUser = (newUserData, history) => (dispatch) => {
+    dispatch({ type: LOADING_UI })
+    axios.post('/signup', newUserData)
+        .then(res => {
+            setAuthorizationHeader(res.data.token)
+            dispatch(getUserData())
+            dispatch({ type: CLEAR_ERRORS })
+            history.push('/')
+        })
+        .catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            })
+        })
+}
+
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem("babbleToken")
+    dispatch({ type: SET_UNAUTHENTICATED })
+    delete axios.defaults.headers.common["Authorization"]
+}
+
 export const getUserData = () => (dispatch) => {
     axios.get('/user')
         .then(res => {
@@ -30,4 +50,10 @@ export const getUserData = () => (dispatch) => {
             })
         })
         .catch(err => console.log(err))
+}
+
+const setAuthorizationHeader = (token) => {
+    const babbleToken = `Bearer ${token}`;
+    localStorage.setItem("babbleToken", babbleToken)
+    axios.defaults.headers.common['Authorization'] = babbleToken
 }
