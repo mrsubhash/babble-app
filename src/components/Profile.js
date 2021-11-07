@@ -9,14 +9,31 @@ import { Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import LinkIcon from '@material-ui/icons/Link'
+import EditIcon from '@material-ui/icons/Edit'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 import dayjs from 'dayjs'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import { logoutUser, uploadImage } from '../redux/actions/userActions'
 
 const styles = (theme) => ({
     ...theme.extra
 })
 
 class Profile extends Component {
+
+    handleImageChange = (event) => {
+        const image = event.target.files[0]
+        const formData = new FormData()
+        formData.append('image', image, image.name)
+        this.props.uploadImage(formData)
+    }
+
+    handleImageEdit = () => {
+        const fileInput = document.getElementById("imageInput")
+        fileInput.click()
+    }
+
     render () {
         const { classes, user: {
             credentials: { handle,
@@ -27,6 +44,12 @@ class Profile extends Component {
                 <div className={classes.profile}>
                     <div className="image-wrapper">
                         <img src={imageUrl} alt="profile" className="profile-image" />
+                        <input type="file" id="imageInput" hidden="hidden" onChange={this.handleImageChange} />
+                        <Tooltip title="Edit Image" placement="top">
+                            <IconButton onClick={this.handleImageEdit}>
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
                     </div>
                     <hr />
                     <div className="profile-details">
@@ -82,8 +105,12 @@ class Profile extends Component {
 Profile.propsTypes = {
     user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
+    logoutUser: PropTypes.func.isRequired,
+    uploadImage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({ user: state.user })
 
-export default connect(mapStateToProps)(withStyles(styles)(Profile))
+const mapActionToProps = { logoutUser, uploadImage }
+
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Profile))
