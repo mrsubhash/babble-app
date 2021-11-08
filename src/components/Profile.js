@@ -15,6 +15,8 @@ import dayjs from 'dayjs'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 import { logoutUser, uploadImage } from '../redux/actions/userActions'
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn'
+import EditDetails from "./EditDetails"
 
 const styles = (theme) => ({
     ...theme.extra
@@ -32,6 +34,10 @@ class Profile extends Component {
     handleImageEdit = () => {
         const fileInput = document.getElementById("imageInput")
         fileInput.click()
+    }
+
+    handleLogout = () => {
+        this.props.logoutUser()
     }
 
     render () {
@@ -78,6 +84,12 @@ class Profile extends Component {
                         <CalendarTodayIcon color="primary" />{' '}
                         <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                     </div>
+                    <Tooltip title="Logout" placement="top">
+                        <IconButton onClick={this.handleLogout}>
+                            <KeyboardReturn color="primary" />
+                        </IconButton>
+                    </Tooltip>
+                    <EditDetails />
                 </div>
             </Paper>
         ) : (
