@@ -14,6 +14,10 @@ html, body {
   margin: 20;
 }
 
+.nav-container svg {
+  color: #f3f3f3;
+}
+
 a {
   text-decoration: none;
 }

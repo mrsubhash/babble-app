@@ -12,6 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
+import CustomButton from '../util/CustomButton'
 
 const styles = (theme) => ({ ...theme.extra, button: { float: 'right' } })
 
@@ -65,11 +66,12 @@ class EditDetails extends Component {
         const { classes } = this.props
         return (
             <Fragment>
-                <Tooltip title="Edit Details" placement="top">
-                    <IconButton onClick={this.handleOpen} className={classes.button}>
-                        <EditIcon color="primary" />
-                    </IconButton>
-                </Tooltip>
+
+                <CustomButton onClick={this.handleOpen}
+                    tipTitle="Edit Details"
+                    btnClassName={classes.button}>
+                    <EditIcon color="primary" />
+                </CustomButton>
 
                 <Dialog open={this.state.open}
                     onClose={this.handleClose}
@@ -112,7 +114,7 @@ class EditDetails extends Component {
                             />
                         </form>
                         <DialogActions>
-                            <Button onClick={this.handleClose} color="secondary">Cancel</Button>
+                            <Button onClick={this.handleClose} color="primary">Cancel</Button>
                             <Button onClick={this.handleSubmit} color="primary">Save Details</Button>
                         </DialogActions>
                     </DialogContent>

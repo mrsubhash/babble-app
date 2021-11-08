@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { logoutUser, uploadImage } from '../redux/actions/userActions'
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn'
 import EditDetails from "./EditDetails"
+import CustomButton from '../util/CustomButton'
 
 const styles = (theme) => ({
     ...theme.extra
@@ -51,11 +52,12 @@ class Profile extends Component {
                     <div className="image-wrapper">
                         <img src={imageUrl} alt="profile" className="profile-image" />
                         <input type="file" id="imageInput" hidden="hidden" onChange={this.handleImageChange} />
-                        <Tooltip title="Edit Image" placement="top">
-                            <IconButton onClick={this.handleImageEdit}>
-                                <EditIcon />
-                            </IconButton>
-                        </Tooltip>
+
+                        <CustomButton onClick={this.handleImageEdit}
+                            tipTitle="Edit Image">
+                            <EditIcon color="primary" />
+                        </CustomButton>
+
                     </div>
                     <hr />
                     <div className="profile-details">
@@ -84,11 +86,11 @@ class Profile extends Component {
                         <CalendarTodayIcon color="primary" />{' '}
                         <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                     </div>
-                    <Tooltip title="Logout" placement="top">
-                        <IconButton onClick={this.handleLogout}>
-                            <KeyboardReturn color="primary" />
-                        </IconButton>
-                    </Tooltip>
+
+                    <CustomButton onClick={this.handleLogout}
+                        tipTitle="Logout">
+                        <KeyboardReturn color="primary" />
+                    </CustomButton>
                     <EditDetails />
                 </div>
             </Paper>
